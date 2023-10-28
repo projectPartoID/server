@@ -4,13 +4,9 @@ on:
   workflow_dispatch: # Event ini memungkinkan pengguna untuk menjalankan workflow secara manual
 
 jobs:
-  auto-start-stop:
+  start-ec2:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
       - name: Start EC2
         run: aws ec2 start-instances --instance-ids ${{ secrets.INSTANCE_IDS }}
         env:
@@ -18,8 +14,11 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.INSTANCE_REGION }}
 
-      # Add steps to do other tasks as needed
+  # Add steps to do other tasks as needed
 
+  stop-ec2:
+    runs-on: ubuntu-latest
+    steps:
       - name: Stop EC2
         run: aws ec2 stop-instances --instance-ids ${{ secrets.INSTANCE_IDS }}
         env:
@@ -27,9 +26,11 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.INSTANCE_REGION }}
 
-  manual-action:
+  manual-approval:
     runs-on: ubuntu-latest
-    needs: auto-start-stop
+    needs:
+      - start-ec2
+      - stop-ec2
     steps:
-      - name: Manually Triggered Action
-        run: echo "This action requires manual intervention. Perform the necessary tasks here."
+      - name: Manual Approval
+        run: echo "Click 'Start' to approve the action"
