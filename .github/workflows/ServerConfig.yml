@@ -24,6 +24,7 @@ jobs:
   # Add steps to do other tasks as needed
 
   stop-ec2:
+    needs: start-ec2
     environment:
       name: Stop EC2
     runs-on: ubuntu-latest
