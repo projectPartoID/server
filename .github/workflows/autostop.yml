@@ -1,9 +1,17 @@
 name: 12AMAuto Stop EC2
 
+#on:
+#  schedule:
+#    - cron: '0 0 * * *'  # Menjalankan setiap jam 12 malam (00:00)
 on:
-  schedule:
-    - cron: '0 0 * * *'  # Menjalankan setiap jam 12 malam (00:00)
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Select environment (start or stop)'
+        required: true
+        default: 'start' # Default to start environment
 
+        
 jobs:
   auto-stop-ec2-mitra:
     runs-on: ubuntu-latest
