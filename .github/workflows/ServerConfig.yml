@@ -9,7 +9,7 @@ on:
         default: 'start' # Default to start environment
 
 jobs:
-  start-ec2:
+  start-ec2-mitra:
     environment:
       name: Start EC2
     runs-on: ubuntu-latest
@@ -21,16 +21,41 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.INSTANCE_REGION }}
 
-  # Add steps to do other tasks as needed
+ 
 
-  stop-ec2:
-    needs: start-ec2
+  # Add steps to do other tasks as needed
+  start-ec2-dashboard:
+    environment:
+      name: Start EC2 Dashboard
+    runs-on: ubuntu-latest
+    steps:
+      - name: Start EC2
+        run: aws ec2 start-instances --instance-ids ${{ secrets.INSTANCE_IDS_DASHBOARD }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.INSTANCE_REGION_DASHBOARD }}
+
+          
+  stop-ec2-mitra:
+    needs: start-ec2-mitra
     environment:
       name: Stop EC2
     runs-on: ubuntu-latest
     steps:
       - name: Stop EC2
         run: aws ec2 stop-instances --instance-ids ${{ secrets.INSTANCE_IDS }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          
+  stop-ec2-dashboard:
+    needs: start-ec2-dashboard
+    environment:
+      name: Stop EC2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Stop EC2
+        run: aws ec2 stop-instances --instance-ids ${{ secrets.INSTANCE_IDS_DASHBOARD }}
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
