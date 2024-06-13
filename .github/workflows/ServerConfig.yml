@@ -50,7 +50,7 @@ jobs:
   stop-ec2-dashboard:
     needs: start-ec2-dashboard
     environment:
-      name: Stop EC2
+      name: Stop EC2 DashBoard
     runs-on: ubuntu-latest
     steps:
       - name: Stop EC2 Dashboard
