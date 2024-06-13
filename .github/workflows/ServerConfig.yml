@@ -1,4 +1,4 @@
-name: Auto Start/Stop EC2 Mitra
+name: Auto Start/Stop EC2
 
 on:
   workflow_dispatch:
@@ -11,7 +11,7 @@ on:
 jobs:
   start-ec2-mitra:
     environment:
-      name: Start EC2
+      name: Start EC2 Mitra
     runs-on: ubuntu-latest
     steps:
       - name: Start EC2 Mitra
@@ -26,8 +26,8 @@ jobs:
       name: Start EC2 Dashboard
     runs-on: ubuntu-latest
     steps:
-      - name: Stop EC2 Dashboard
-        run: aws ec2 stop-instances --instance-ids ${{ secrets.INSTANCE_IDS_DASHBOARD }}
+      - name: Start EC2 Dashboard
+        run: aws ec2 start-instances --instance-ids ${{ secrets.INSTANCE_IDS_DASHBOARD }}
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -36,7 +36,7 @@ jobs:
   stop-ec2-mitra:
     needs: start-ec2-mitra
     environment:
-      name: Stop EC2
+      name: Stop EC2 Mitra
     runs-on: ubuntu-latest
     steps:
       - name: Stop EC2 mitra
