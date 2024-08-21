@@ -3,7 +3,7 @@ name: 12AMAuto Stop EC2
 on:
   schedule:
     - cron: '0 0 * * *'  # Menjalankan setiap jam 12 malam (00:00)
-    - cron: '0 12 * * *'
+    - cron: '0 9 * * *'
  
 
         
