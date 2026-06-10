@@ -33,7 +33,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.INSTANCE_REGION_DASHBOARD }}
           
-  start-ec2-jira:
+  start-ec2-j:
     environment:
       name: Start EC2 J
     runs-on: ubuntu-latest
@@ -72,7 +72,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.INSTANCE_REGION_DASHBOARD }}
           
-  stop-ec2-jira:
+  stop-ec2-j:
     environment:
       name: Stop EC2 J
     runs-on: ubuntu-latest
